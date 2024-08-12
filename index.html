@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Input Data Siswa</title>
+</head>
+<body>
+  <h1>Input Data Siswa</h1>
+  <form id="dataForm">
+    <label for="nis">NIS:</label>
+    <input type="text" id="nis" name="nis" required><br><br>
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama" required><br><br>
+    <label for="jenis_kelamin">Jenis Kelamin:</label>
+    <select id="jenis_kelamin" name="jenis_kelamin" required>
+      <option value="Laki-laki">Laki-laki</option>
+      <option value="Perempuan">Perempuan</option>
+    </select><br><br>
+    <label for="kelas">Kelas:</label>
+    <input type="text" id="kelas" name="kelas" required><br><br>
+    <label for="jurusan">Jurusan:</label>
+    <input type="text" id="jurusan" name="jurusan" required><br><br>
+    <label for="nomor_telepon">Nomor Telepon:</label>
+    <input type="tel" id="nomor_telepon" name="nomor_telepon" required><br><br>
+    <label for="alamat">Alamat:</label>
+    <textarea id="alamat" name="alamat" required></textarea><br><br>
+    <input type="submit" value="Kirim">
+  </form>
+  <script>
+    document.getElementById('dataForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+
+      fetch('https://script.google.com/macros/s/AKfycbz0Nf_g7KavkvDMXo5Mcq4ipqSbCtS_yN6tCr6ZgyN0abr19dloDpG6QtM9oBFSD-Fh/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(result => {
+        alert('Data berhasil dikirim');
+        event.target.reset();
+      })
+      .catch(error => {
+        alert('Terjadi kesalahan');
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
